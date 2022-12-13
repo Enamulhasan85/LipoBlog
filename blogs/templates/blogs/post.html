@@ -8,47 +8,51 @@
 
 
 {% block body %}
-<div class="container-fluid pt-3">
+<div class="container-fluid py-3">
     <h2 class="text-center">POSTS</h2>
     <hr class="mx-auto col-sm-6"/>
-    <div class="row">
-        <div class="col-sm-3">
+    <div class="row py-3">
+        <div class="col-sm-3 border-end">
             <div class="container py-3">
                 <div class="text-end">
-                    <button type="button" class="btn btn-primary btn-lg">Create Post</button>
+                    <a class="btn btn-primary btn-lg" href="create/">Create Post</a>
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6 border-end">
             <div class="container py-3">
                 {% for post in posts %}
                     <div class="card text-dark mb-3 mx-auto" style="max-width: 600px;">
                         <div class="row g-0">
                             <div class="col-md-4 d-flex align-items-start card-body px-3">
-                                <img src="{{ post.blogimage.url }}" class="rounded-start" alt="{{ post.title }}" style="width:165px; height:170px;">
+                                <img src="{{ post.blogimage.url }}" class="rounded" alt="{{ post.title }}" style="width:165px; height:180px;">
                             </div>
                             <div class="col-md-8">
-                                <div class="card-body">
+                                <div class="card-body pb-2">
                                     <div class="p-2 px-3 rounded font-monospace" style="background-color: aliceblue;">
                                         <div class="d-flex align-items-center">
                                             <h6 class="card-title my-1 me-3"><b class="">Title: </b> {{ post.title }}</h6>
                                             {% if post.status == 'draft' %}
-                                                <span class="badge bg-warning text-dark font-monospace">{{post.status}}</span>
+                                                <span class="badge bg-warning text-dark font-monospace">{{post.get_status_display }}</span>
                                             {% else %}
-                                                <span class="badge bg-success text-white font-monospace">{{post.status}}</span>
+                                                <span class="badge bg-success text-white font-monospace">{{post.get_status_display }}</span>
                                             {% endif %}
                                         </div>
-                                        <p class="card-text my-1"><b class="">Text: </b> {{ post.blogtext }}</p>
                                         <div class="font-monospace"><b>Author:</b> {{post.author}}</div>
+                                        <div class="font-monospace"><b>Category:</b> {{post.category}}</div>
                                         <div class="font-monospace"><b>Location:</b> {{post.location}}</div>
                                         <div class="font-monospace"><b>Date:</b> {{post.date}}</div>
                                     </div>
                                 </div>
+                                <div class="px-3 pb-2">
+                                    <a type="button" class="btn btn-primary btn-sm" href="{% url 'post_edit' post.slug %}">Edit</a>
+                                    <a type="button" class="btn btn-success btn-sm"  href="{% url 'post_view' post.slug %}">View</a>
+                                    <form action="{% url 'post_delete' post.slug %}" method="post" class="d-inline-block" onsubmit="return confirm('Do you really want to delete the post?');">
+                                        {% csrf_token %}
+                                        <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+                                    </form>
+                                </div>
                             </div>
-                        </div>
-                        <div class="pb-3 text-center">
-                            <button type="button" class="btn btn-primary btn-sm">Edit</button>
-                            <button type="button" class="btn btn-success btn-sm">View</button>
                         </div>
                     </div>
                     <!--
@@ -71,4 +75,8 @@
 {% endblock %}
 
 
-{% block site_js %}{% endblock %}
+{% block site_js %}
+    <script>
+        
+    </script>
+{% endblock %}

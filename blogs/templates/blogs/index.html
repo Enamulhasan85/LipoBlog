@@ -14,12 +14,11 @@
             background-size: cover;">
     <div class="col-sm-5 mx-auto" style="background-color: #7fffd4cf;">
         <div class="text-center my-5 py-3">
-            <h1 class="fw-bolder">Welcome to Blog Home!</h1>
-            <p class="lead mb-0">A Bootstrap 5 starter layout for your next blog homepage</p>
+            <h1 class="fw-bolder">Welcome to Dashboard!</h1>
+            <p class="lead mb-0">Publish, share, grow all in one place.</p>
         </div>
     </div>
 </header>
-<div class="" style="background-color: #3d3d3d36;"></div>
 
 <!-- Masthead
 <header class="masthead" style="position: relative; background-color: #343a40;
@@ -37,8 +36,32 @@ padding-top: 6rem; padding-bottom: 6rem;">
 </header>
 -->
 
-
-
+<div class="container p-5 d-flex justify-content-around">
+    <a class="d-flex flex-column justify-content-center align-items-center text-decoration-none text-dark" href="/profile/" target="_blank">
+        <img src="../static/blogs/images/Profile.png" class="rounded-start" alt="manage blog" style="width: 130px;height: 130px;">
+        <div class="p-3">
+            Manage Your Profile
+        </div>
+    </a>
+    <a class="d-flex flex-column justify-content-center align-items-center text-decoration-none text-dark" href="/bloglayout/" target="_blank">
+        <img src="../static/blogs/images/blog.png" class="rounded-start" alt="manage blog" style="width: 130px;height: 130px;">
+        <div class="p-3">
+            Manage Your BlogHome
+        </div>
+    </a>
+    <a class="d-flex flex-column justify-content-center align-items-center text-decoration-none text-dark" href="/posts/" target="_blank">
+        <img src="../static/blogs/images/caption.png" class="rounded-start" alt="manage blog" style="width: 130px;height: 130px;">
+        <div class="p-3">
+            Manage Your Posts
+        </div>
+    </a>
+    <a class="d-flex flex-column justify-content-center align-items-center text-decoration-none text-dark" href="{% url 'blog_view' blogger.slug %}" target="_blank">
+        <img src="../static/blogs/images/seo.png" class="rounded-start" alt="manage blog" style="width: 130px;height: 130px;">
+        <div class="p-3">
+            View Your Blog
+        </div>
+    </a>
+</div>
 
 
 {% endblock %}

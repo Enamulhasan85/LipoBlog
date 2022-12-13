@@ -1,0 +1,166 @@
+{% extends 'blogs/base/base.html' %}
+
+
+{% block title %}{{blogger.fullname}}{% endblock %}
+
+
+{% block site_css %}{% endblock %}
+
+
+{% block body %}
+<header class="py-5 bg-light border-bottom mb-4" style="background: url(../static/blogs/images/bloghome.jpg) no-repeat center center; background-size: cover;">
+    <div class="col-sm-4 mx-auto" style="background-color: #7fffd4cf;">
+        <div class="d-flex align-items-center justify-content-start" style="background-color: #7fffd4cf;">
+            {% if blogger.image == "" %}
+                <img class="rounded-circle ms-4 mx-2" width="135px" height="135px" src="" alt="Profile Picture">
+            {% else %}
+                <img class="rounded-circle ms-4 mx-2" width="135px" height="135px" src="{{ blogger.image.url }}">
+            {% endif %}
+            <div class="px-3 py-3">
+                <h2 class="card-title fw-bolder mb-1">{{blogger.fullname}}</h2>
+                <p class="fst-italic mb-1">Occupation: {{blogger.occupation}}</p>
+                <p class="fst-italic mb-1">Education: {{blogger.education}}</p>
+                <p class="mb-1">Birthdate: {{blogger.birthdate}}</p>
+                <p class="mb-1">Address: {{blogger.address}}</p>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Page content-->
+<div class="container">
+    <div class="row">
+        <!-- Blog entries-->
+        <div class="col-lg-8">
+            <!-- Featured blog post-->
+            {% if post1 != None %}
+            <div class="card mb-4">
+                <a href="{% url 'post_view' post1.slug %}"><img class="card-img-top" src="{{post1.blogimage.url}}" width="400px" height="300px" alt="..." /></a>
+                <div class="card-body">
+                    <div class="small text-muted">{{post1.date}}</div>
+                    <h2 class="card-title">{{post1.title}}</h2>
+                    <p class="card-text">{{post1.blogtext|safe|truncatewords:"10"|linebreaks}}</p>
+                    <a class="btn btn-primary" href="{% url 'post_view' post1.slug %}">Read more →</a>
+                </div>
+            </div>
+            {% endif %}
+            <!-- Nested row for non-featured blog posts-->
+            <div class="row">
+                <div class="col-lg-6">
+                    <!-- Blog post-->
+                    {% if post2 != None %}
+                        <div class="card mb-4">
+                            <a href="{% url 'post_view' post2.slug %}"><img class="card-img-top" src="{{post2.blogimage.url}}" width="400px" height="200px" alt="..." /></a>
+                            <div class="card-body">
+                                <div class="small text-muted">{{post2.date}}</div>
+                                <h2 class="card-title">{{post2.title}}</h2>
+                                <p class="card-text">{{post2.blogtext|safe|truncatewords:"10"|linebreaks}}</p>
+                                <a class="btn btn-primary" href="{% url 'post_view' post2.slug %}">Read more →</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <!-- Blog post-->
+                    {% if post3 != None %}
+                        <div class="card mb-4">
+                            <a href="{% url 'post_view' post3.slug %}"><img class="card-img-top" src="{{post3.blogimage.url}}" width="400px" height="200px" alt="..." /></a>
+                            <div class="card-body">
+                                <div class="small text-muted">{{post3.date}}</div>
+                                <h2 class="card-title">{{post3.title}}</h2>
+                                <p class="card-text">{{post3.blogtext|safe|truncatewords:"10"|linebreaks}}</p>
+                                <a class="btn btn-primary" href="{% url 'post_view' post3.slug %}">Read more →</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-lg-6">
+                    <!-- Blog post-->
+                    {% if post4 != None %}
+                        <div class="card mb-4">
+                            <a href="{% url 'post_view' post4.slug %}"><img class="card-img-top" src="{{post4.blogimage.url}}" width="400px" height="200px" alt="..." /></a>
+                            <div class="card-body">
+                                <div class="small text-muted">{{post4.date}}</div>
+                                <h2 class="card-title">{{post4.title}}</h2>
+                                <p class="card-text">{{post4.blogtext|safe|truncatewords:"10"|linebreaks}}</p>
+                                <a class="btn btn-primary" href="{% url 'post_view' post4.slug %}">Read more →</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <!-- Blog post-->
+                    {% if post5 != None %}
+                        <div class="card mb-4">
+                            <a href="{% url 'post_view' post5.slug %}"><img class="card-img-top" src="{{post5.blogimage.url}}" width="400px" height="200px" alt="..." /></a>
+                            <div class="card-body">
+                                <div class="small text-muted">{{post5.date}}</div>
+                                <h2 class="card-title">{{post5.title}}</h2>
+                                <p class="card-text">{{post5.blogtext|safe|truncatewords:"10"|linebreaks}}</p>
+                                <a class="btn btn-primary" href="{% url 'post_view' post5.slug %}">Read more →</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <!-- Pagination-->
+            <nav aria-label="Pagination">
+                <hr class="my-0" />
+                <ul class="pagination justify-content-center my-4">
+                    <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
+                    <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">3</a></li>
+                    <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">15</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">Older</a></li>
+                </ul>
+            </nav>
+        </div>
+        <!-- Side widgets-->
+        <div class="col-lg-4">
+            <!-- Categories widget-->
+            <div class="card mb-4">
+                <div class="card-header">Search</div>
+                <div class="card-body">
+                    <div class="input-group pb-3">
+                        <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
+                        <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+                    </div>
+                    <form class="" action="/blogview/{{blogger.slug}}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                        <div class="pb-2">
+                            <label class="form-label" for="category"><b>Post Category:</b></label>
+                            <div class="d-flex">
+                                <select name="category" class="form-select" id="category">
+                                    {% for item in category %}
+                                        <option value="{{item.id}}">{{item.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="d-flex py-1">
+                            <input class="btn btn-success w-100" type="submit" value="Search">
+                        </div>
+                    </form>
+
+                    {% if post != None %}
+                        <h5 class="pt-4">Search Result:</h5>
+                        <ol class="list-group list-group-numbered">
+                            {% for item in post %}
+                                <li class="list-group-item">
+                                    <a href="{% url 'post_view' item.slug %}" target="_blank">{{ item }}</a>
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block site_js %}
+    <script>
+        
+    </script>
+{% endblock %}

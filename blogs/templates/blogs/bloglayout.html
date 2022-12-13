@@ -1,0 +1,127 @@
+{% extends 'blogs/base/base.html' %}
+
+
+{% block title %}Blog Layout{% endblock %}
+
+
+{% block site_css %}{% endblock %}
+
+
+{% block body %}
+
+<section class="py-3">
+    <div class="container px-4 px-lg-5 my-3">
+        <div class="row w-75 mx-auto text-center">
+            <h2 class="text-center">Blogsite layout</h2>
+            <hr class="m-0 mb-4">
+        </div>
+        <form class="" action="." method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-sm-5 border border-3">
+                    <img class="card-img-top" src="/files/images/layout.png" width="400px" height="500px" alt="..." />
+                </div>
+                <div class="col-sm-6">
+                <div class="col-sm-10 mx-auto py-2">
+                    <label class="form-label" for="mainfeatured"><b>Main Featured:</b></label>
+                    {% if post1 != None %} 
+                        <a href="{% url 'post_view' post1.slug %}" target="_blank" class="btn-sm">{{ post1 }}</a>
+                    {% endif %}
+                    <div class="d-flex">
+                        <select name="mainfeatured" class="form-select" id="mainfeatured">
+                            {% for item in post %}
+                                {% if item.id == post1.id %}
+                                    <option value="{{item.slug}}" selected>{{item}}</option>
+                                {% else %}
+                                    <option value="{{item.slug}}">{{item}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-10 mx-auto py-2">
+                    <label class="form-label" for="featuredone"><b>Featured Post One:</b></label>
+                    {% if post2 != None %} 
+                        <a href="{% url 'post_view' post2.slug %}" target="_blank" class="btn-sm">{{ post2 }}</a>
+                    {% endif %}
+                    <div class="d-flex">
+                        <select name="featuredone" class="form-select" id="featuredone">
+                            <option value></option>
+                            {% for item in post %}
+                                {% if item.id == post2.id %}
+                                    <option value="{{item.slug}}" selected>{{item}}</option>
+                                {% else %}
+                                    <option value="{{item.slug}}">{{item}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-10 mx-auto py-2">
+                    <label class="form-label" for="featuredtwo"><b>Featured Post Two:</b></label>
+                    {% if post3 != None %} 
+                        <a href="{% url 'post_view' post3.slug %}" target="_blank" class="btn-sm">{{ post3 }}</a>
+                    {% endif %}
+                    <div class="d-flex">
+                        <select name="featuredtwo" class="form-select" id="featuredtwo">
+                            <option value></option>
+                            {% for item in post %}
+                                {% if item.id == post3.id %}
+                                    <option value="{{item.slug}}" selected>{{item}}</option>
+                                {% else %}
+                                    <option value="{{item.slug}}">{{item}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-10 mx-auto py-2">
+                    <label class="form-label" for="featuredthree"><b>Featured Post Three:</b></label>
+                    {% if post4 != None %} 
+                        <a href="{% url 'post_view' post4.slug %}" target="_blank" class="btn-sm">{{ post4 }}</a>
+                    {% endif %}
+                    <div class="d-flex">
+                        <select name="featuredthree" class="form-select" id="featuredthree">
+                            <option value></option>
+                            {% for item in post %}
+                                {% if item.id == post4.id %}
+                                    <option value="{{item.slug}}" selected>{{item}}</option>
+                                {% else %}
+                                    <option value="{{item.slug}}">{{item}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-10 mx-auto py-2">
+                    <label class="form-label" for="featuredfour"><b>Featured Post Four:</b></label>
+                    {% if post5 != None %} 
+                        <a href="{% url 'post_view' post5.slug %}" target="_blank" class="btn-sm">{{ post5 }}</a>
+                    {% endif %}
+                    <div class="d-flex">
+                        <select name="featuredfour" class="form-select" id="featuredfour">
+                            <option value></option>
+                            {% for item in post %}
+                                {% if item.id == post5.id %}
+                                    <option value="{{item.slug}}" selected>{{item}}</option>
+                                {% else %}
+                                    <option value="{{item.slug}}">{{item}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-3 text-center">
+                    <button class="btn btn-warning profile-button" type="submit">Save Layout</button>
+                </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}
+
+{% block site_js %}
+    <script>
+    </script>
+{% endblock %}

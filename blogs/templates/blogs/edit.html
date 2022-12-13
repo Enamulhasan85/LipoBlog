@@ -1,0 +1,114 @@
+{% extends 'blogs/base/base.html' %}
+
+
+{% block title %}Edit Post{% endblock %}
+
+
+{% block site_css %}
+<style>
+    b, strong {
+      font-weight: 500;
+    }
+</style>
+{% endblock %}
+
+
+{% block body %}
+<div class="container-fluid py-3">
+    <h2 class="text-center">Edit Post</h2>
+    <hr class="mx-auto col-sm-6"/>
+    <form class="" action="{% url 'post_edit' post.slug %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row py-3">
+            <div class="col-sm-4 border-end">
+                <div class="container px-5">
+                        <div class="pb-2">
+                            <label class="form-label" for="id_title"><b>Title:</b></label>
+                            <input class="form-control" type="text" name="title" maxlength="200" required="" id="id_title" value="{{ post.title }}">
+                        </div>
+
+                        <div class="py-2">
+                            <label class="form-label" for="id_blogimage"><b>Blogimage:</b></label>
+                            <a href="{{ post.blogimage.url }}" target="_blank" class="btn-sm">{{ post.blogimage }}</a>
+                            <input class="form-control" type="file" src="{{post.blogimage}}" name="blogimage" accept="image/*" id="id_blogimage" >
+                        </div>
+                        
+                        <div class="py-2">
+                            <label class="form-label" for="category"><b>Category:</b></label>
+                            <div class="d-flex">
+                                <select name="category" class="form-select w-50 me-2" id="category">
+                                    <option value></option>
+                                    {% for item in category %}
+                                        {% if item.id == post.category.id %}
+                                            <option value="{{item.id}}" selected>{{item.name}}</option>
+                                        {% else %}
+                                            <option value="{{item.id}}">{{item.name}}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon1" style="font-weight: 500;">New:</span>
+                                    <input class="form-control" type="text" name="category2" maxlength="200" id="category2">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--
+                        <div class="py-3">
+                            <label class="form-label" for="id_date">Date:</label>
+                            <input class="form-control" type="date" name="date" required="" id="id_date">
+                        </div>
+                        -->
+
+                        <div class="py-2">
+                            <label class="form-label" for="id_location"><b>Location:</b></label>
+                            <input class="form-control" type="text" name="location" maxlength="200" required="" id="id_location" value="{{ post.location }}">
+                        </div>
+
+                        <!--
+                        <div class="py-3">
+                            <label class="form-label" for="id_author">Author:</label>
+                            <select class="form-select" name="author" required="" id="id_author">
+                            </select>
+                        </div>
+
+                        <div class="py-3">
+                            <label class="form-label" for="id_slug">Slug:</label>
+                            <input class="form-control" type="text" name="slug" maxlength="200" required="" id="id_slug">
+                        </div>
+                        -->
+                        <div class="py-2">
+                            <label class="form-label" for="id_status"><b>Status:</b></label>
+                            <select name="status" class="form-select" id="id_status" value="{{ post.status }}">
+                                {% if post.status == "draft" %}
+                                    <option value="draft" selected>Draft</option>
+                                    <option value="published">Published</option>
+                                {% else %}
+                                    <option value="draft" >Draft</option>
+                                    <option value="published" selected>Published</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                        <div class="d-flex py-3">
+                            <input class="btn btn-success w-100" type="submit" value="Save">
+                        </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="container px-4">
+                    <div class="pb-3">
+                        <label class="form-label" for="id_blogtext"><b>Blogtext:</b></label>
+                        {{ form.media }}
+                        {{ form.blogtext }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}
+
+
+{% block site_js %}{% endblock %}
