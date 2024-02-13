@@ -45,8 +45,8 @@
                                     </div>
                                 </div>
                                 <div class="px-3 pb-2">
-                                    <a type="button" class="btn btn-primary btn-sm" href="{% url 'post_edit' post.slug %}">Edit</a>
-                                    <a type="button" class="btn btn-success btn-sm"  href="{% url 'post_view' post.slug %}">View</a>
+                                    <a type="button" class="btn btn-primary btn-sm" target="_blank" href="{% url 'post_edit' post.slug %}">Edit</a>
+                                    <a type="button" class="btn btn-success btn-sm" target="_blank" href="{% url 'post_view' post.slug %}">View</a>
                                     <form action="{% url 'post_delete' post.slug %}" method="post" class="d-inline-block" onsubmit="return confirm('Do you really want to delete the post?');">
                                         {% csrf_token %}
                                         <input type="submit" value="Delete" class="btn btn-danger btn-sm">

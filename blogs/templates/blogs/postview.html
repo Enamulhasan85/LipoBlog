@@ -18,10 +18,9 @@
                     <!-- Post title-->
                     <h1 class="fw-bolder mb-1">{{post.title}}</h1>
                     <!-- Post meta content-->
-                    <div class="text-muted fst-italic mb-2">Posted on {{post.date}} by {{post.author}} at {{post.location}}</div>
+                    <div class="text-muted fst-italic mb-2">Posted on {{post.date}} by {{post.author.fullname}} at {{post.location}}</div>
                     <!-- Post categories-->
                     <a class="badge bg-dark text-decoration-none link-light" href="#!">{{post.category.name}}</a>
-                    <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
                     {% if post.status == 'draft' %}
                         <span class="badge bg-warning text-dark font-monospace">{{post.get_status_display }}</span>
                     {% else %}
@@ -78,10 +77,68 @@
         <!-- Side widgets-->
         <div class="col-lg-4">
             <!-- Search widget-->
-            <div class="py-3 text-center">
-                <a class="btn btn-primary" href="{% url 'blog_view' blogger.slug %}">View Blog <i class="bi bi-box-arrow-up-right"></i></a>
+            
+            {% if user.is_authenticated %}
+            <div class="card mb-4">
+                <div class="card-header">Post Interaction</div>
+                <div class="card-body">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="">
+                            <div class="form-floating">
+                                <textarea class="form-control" name="comment" required id="floatingTextarea2" rows="4" cols="50" style="height: 100px;"></textarea>
+                                <label for="floatingTextarea2">Comments</label>
+                            </div>
+                        </div>
+                        <div class="text-center mt-2">
+                            {% if post_interaction.liked %}
+                                <button class="btn btn-primary me-2" type="button" id="like">Like <i class="fas fa-thumbs-up"></i></button> 
+                            {% else %}
+                                <button class="btn btn-outline-primary me-2" type="button" id="like">Like <i class="fas fa-thumbs-up"></i></button> 
+                            {% endif %}
+                            <button class="btn btn-warning me-2" type="submit">Submit <i class="fas fa-save"></i></button>
+                            <a class="btn btn-info me-2" target="_blank" href="{% url 'blog_view' blogger.slug %}">View Blog <i class="bi bi-box-arrow-up-right"></i></a>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+            <!-- Modal -->
+            <div class="modal fade" id="popupModal" tabindex="-1" aria-labelledby="popupModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                    <p id="popupMessage">This is a popup message.</p>
+                    </div>
+                </div>
+                </div>
             </div>
 
+            <!-- Side widget-->
+            <div class="card mb-4">
+                <div class="card-header">Comments</div>
+                <div class="card-body">
+                    {% for comment in post_interaction.comments %}
+                        <div class="p-2 text-justify mt-2 rounded" style="background-color: aquamarine;">
+                            <div class="d-flex align-items-center">
+                                <div class="px-3 py-2">
+                                    {% if comment.post_interaction.blogger.image == "" %}
+                                        <img src="" alt="" class="rounded-circle" width="35" height="35">
+                                    {% else %}
+                                        <img src="{{comment.post_interaction.blogger.image.url}}" alt="" class="rounded-circle" width="35" height="35">
+                                    {% endif %}
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <a class="fw-semibold text-dark" style="font-size:16px;" target="_blank" href="{% url 'blog_view' comment.post_interaction.blogger.slug %}">{{comment.post_interaction.blogger.fullname}}</a>
+                                    <span style="font-size:12px;">- {{comment.date}}</span>
+                                </div>
+                            </div>
+                            <div class="px-2 py-1" style="font-size:14px;background-color: #d0ffef !important;"><i>"{{comment.comment}}"</i></div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
             <div class="card mb-4">
                 <div class="card-header">Search</div>
                 <div class="card-body">
@@ -113,11 +170,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Side widget-->
-            <div class="card mb-4">
-                <div class="card-header">Side Widget</div>
-                <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
-            </div>
         </div>
     </div>
 </div>
@@ -128,6 +180,50 @@
 
 {% block site_js %}
     <script>
+
+    // Function to show the modal popup
+    function showPopupMessage(message) {
+        // Set the message content
+        $('#popupMessage').text(message);
         
+        // Show the modal
+        $('#popupModal').modal('show');
+        
+        // Automatically hide the modal after 1 second
+        setTimeout(function() {
+            $('#popupModal').modal('hide');
+        }, 700); // 1000 milliseconds = 1 second
+    }
+
+    $("#like").on('click', function() {   
+
+
+        $.ajax({
+            url : "{% url 'likepost' %}", // the endpoint
+            type : "GET", // http method
+            data: { 
+                'postid': {{ post.id }},
+            },
+            // handle a successful response
+            success : function(data) {
+                console.log(data); // log the returned json to the console
+                if(data.liked==true){
+                    $('#like').removeClass('btn-outline-primary');
+                    $('#like').addClass('btn-primary');
+                    showPopupMessage("Post Liked!!");
+                }
+                else{
+                    $('#like').addClass('btn-outline-primary');
+                    $('#like').removeClass('btn-primary');
+                    showPopupMessage("Post Unliked!!");
+                }
+            },
+            // handle a non-successful response
+            error : function(xhr,errmsg,err) {
+                console.log(err); // provide a bit more info about the error to the console
+                console.log(errmsg); // provide a bit more info about the error to the console
+            }
+        });
+    });
     </script>
 {% endblock %}

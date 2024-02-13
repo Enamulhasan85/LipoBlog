@@ -1,47 +1,37 @@
 {% extends 'blogs/base/base.html' %}
 
 
-{% block title %}Home{% endblock %}
+{% block title %}Discover{% endblock %}
 
 
 {% block site_css %}{% endblock %}
 
 
 {% block body %}
-
-    {% if user.is_authenticated == False %}
-        <!-- Masthead-->
-        <header class="masthead" style="position: relative; background-color: #343a40;
-            background: url(../static/blogs/images/landing.jpg) no-repeat center center; background-size: cover;
-            padding-top: 8rem; padding-bottom: 8rem;">
-            <div class="container position-relative">
-                <div class="row justify-content-center">
-                    <div class="row justify-content-left">
-                        <div class="col-11 col-lg-6 px-4 py-2 d-flex align-items-center">
-                            <div class="text- text-white">
-                                <!-- Page heading-->
-                                <h1 class="mb-4">LipoBlog : Stay curious. Discover Today!</h1>
-                                <p class="lead">Stay curious. Discover stories, thinking, and expertise from writers on any topic.</p>
-                                <a class="btn btn-warning px-5 py-2" href="{% url 'discover_stories' %}">Discover <i class="far fa-star"></i></a>
-                            </div>
-                        </div>
-                        <div class="col-11 col-lg-6 px-4 py-2 bg-secondary">
-                            <div class="text-warning">
-                                <!-- Page heading-->
-                                <h1 class="mb-4">LipoBlog : Create Your Personal Blogsite Today!</h1>
-                                <p class="lead">If you have a story to tell, knowledge to share, or a perspective to offer — welcome home.</p>
-                                <a class="btn btn-primary px-5 py-2" href="/blogs/">Get Started</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-    {% endif %}
+{% load crispy_forms_tags %}
 
 
     <section class="features-icons bg-light" style="padding: 2rem 2rem;">
         <div class="container">
+            <div class="alert alert-primary mt-3">
+                <form id="" method="GET" action="" class="">
+                    <div class="row gx-3">
+                        <div class="col-sm-3 ">
+                            {{ form.title|as_crispy_field }}
+                        </div>
+                        <div class="col-sm-3  ">
+                            {{ form.author|as_crispy_field }}
+                        </div>
+                        <div class="col-sm-3  ">
+                            {{ form.category|as_crispy_field }}
+                        </div>
+                        <div class="col-sm-3 ms-auto mt-auto mb-3">
+                            <input class="btn btn-primary" type="submit" id="searchBtn" value="Show" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+
             <div class="row bg-warning py-3">
                 <h4 class="mb-0"><i class="fas fa-meteor"></i> <span class="">Trending Now...</span></h3>
             </div>
@@ -75,35 +65,6 @@
                         </div>
                     </div>
                 {% endfor %}
-            </div>
-        </div>
-    </section>
-
-    <!-- Icons Grid-->
-    <section class="features-icons bg-light text-center" style="">
-        <div class="container">
-            <div class="row"style="font-size: 68px;">
-                <div class="col-lg-4">
-                    <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3 py-3">
-                        <div class="features-icons-icon d-flex"><i class="bi-window m-auto text-primary"></i></div>
-                        <h3>Fully Responsive</h3>
-                        <p class="lead mb-0">This theme will look great on any device, no matter the size!</p>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3 py-3">
-                        <div class="features-icons-icon d-flex"><i class="bi-layers m-auto text-primary"></i></div>
-                        <h3>Bootstrap 5 Ready</h3>
-                        <p class="lead mb-0">Featuring the latest build of the new Bootstrap 5 framework!</p>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="features-icons-item mx-auto mb-0 mb-lg-3 py-3">
-                        <div class="features-icons-icon d-flex"><i class="bi-terminal m-auto text-primary"></i></div>
-                        <h3>Easy to Use</h3>
-                        <p class="lead mb-0">Ready to use with your own content, or customize the source files!</p>
-                    </div>
-                </div>
             </div>
         </div>
     </section>

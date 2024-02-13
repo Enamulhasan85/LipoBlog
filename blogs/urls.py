@@ -7,6 +7,7 @@ from django.conf import settings
 urlpatterns = [
     path('', RedirectView.as_view(url='/home')),
     path('home/', views.home, name='home'),
+    path('discover/', views.discoverpost, name='discover_stories'),
     path('register/', views.registerpage, name='register'),
     path('login/', views.loginpage, name='login'),
     path('logout/', views.logoutUser, name='logout'),
@@ -18,5 +19,6 @@ urlpatterns = [
     path("posts/create/", views.createpost, name='post_create'),
     path("posts/edit/<slug:postslug>", views.editpost, name='post_edit'),
     path("posts/view/<slug:postslug>", views.postview, name='post_view'),
+    path("posts/like/", views.likepost, name='likepost'),
     path("posts/delete/<slug:postslug>", views.deletepost, name='post_delete'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

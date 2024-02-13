@@ -16,8 +16,10 @@ class blogger(models.Model):
     address = models.CharField(max_length=250, blank=True)
     occupation = models.CharField(max_length=250, blank=True)
     education = models.CharField(max_length=250, blank=True)
+    about = models.CharField(max_length=500, blank=True)
     image = models.ImageField(upload_to='images')
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
     slug = models.SlugField(max_length=200, blank=True, null=True)
 
     def __str__(self):
@@ -49,6 +51,20 @@ class post(models.Model):
 
     def __str__(self):
         return f'{self.title} ({self.date})'
+
+
+class post_interaction(models.Model):
+    post = models.ForeignKey(post, on_delete=models.CASCADE)
+    blogger = models.ForeignKey(blogger, on_delete=models.CASCADE)
+    liked = models.BooleanField(default=False)
+    viewed = models.BooleanField(default=False)
+    date = models.DateTimeField(null=True, blank=True)
+
+
+class post_comment(models.Model):
+    post_interaction = models.ForeignKey(post_interaction, on_delete=models.CASCADE)
+    comment = models.TextField()
+    date = models.DateTimeField(null=True, blank=True)
 
 
 class bloglayout(models.Model):
