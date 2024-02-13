@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="G:\Enam\Learning\Web\Django\V 1.02\LipoBlog\.venv"
+VIRTUAL_ENV="E:\Enam\Documents_Works\Projects\LipoBlog\.venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
