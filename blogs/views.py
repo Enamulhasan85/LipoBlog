@@ -321,7 +321,7 @@ def postview(request, postslug):
             print(post_commentobj.comment)
             post_commentobj.save()
 
-    post_interactionobj.comments = post_comment.objects.order_by('-date')[:6]
+    post_interactionobj.comments = post_comment.objects.filter(post_interaction__post=Post).order_by('-date')[:6]
     return render(request, 'blogs\postview.html', {
             'post': Post,
             'blogger': bloger,
